@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Alkemy_Challenge_Ingreso.Contexts;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +8,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddEntityFrameworkSqlServer();
+builder.Services.AddDbContext<DisneyContext>((services, options) =>
+{
+    options.UseInternalServiceProvider(services);
+    options.UseSqlServer("Data Source=DESKTOP-HSEU7UR\\SQLEXPRESS;Database=DisneyDb;Integrated Security=True;");
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
